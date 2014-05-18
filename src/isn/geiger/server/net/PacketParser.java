@@ -75,10 +75,15 @@ public class PacketParser {
         register(PacketHeaderEnum.RECV_HITS_LIST, new PacketDecoder() {
             @Override
             public void decode(NetClient client, IoBuffer pBuff) throws Exception {
+                try{
                 int count = pBuff.getInt();
                 for (int i = 0; i < count; i++) {
-                    Hitlog hitLog = new Hitlog(new Date(pBuff.getInt() * 1000), pBuff.getInt());
+                    long date = pBuff.getInt();
+                    Hitlog hitLog = new Hitlog(new Date(date*1000), pBuff.getInt());
                     App().Database.HitLogController.create(hitLog);
+                }
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
                 }
             }
 

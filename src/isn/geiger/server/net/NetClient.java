@@ -29,11 +29,12 @@ public class NetClient {
             builder.append(key[i]);
         }
         this.authKey = builder.toString();
+        
         return key;
     }
 
     public boolean authentifiate(String auth) {
-        //Just antiKikoo protection
+        //Just basic protection
         StringBuilder realAuth = new StringBuilder(App().getConfig().getString("client-user"));
         realAuth.append('\u0000');
         realAuth.append(App().getConfig().getString("client-pass"));
@@ -62,7 +63,7 @@ public class NetClient {
 
     public void send(PacketPrototype toSend) {
         session.write(toSend.encode());
-        Main.println(this, "packet " + toSend.getClass().getCanonicalName() + " sent.");
+        Main.println(this, "packet " + toSend.getClass().getSimpleName() + " sent.");
     }
 
     public void send(IoBuffer toSend) {
@@ -71,7 +72,7 @@ public class NetClient {
 
     public void sendAndDisconnect(PacketPrototype toSend) {
         session.write(toSend.encode()).addListener(IoFutureListener.CLOSE);
-        Main.println(this, "packet " + toSend.getClass().getCanonicalName() + " sent and client disconnected.");
+        Main.println(this, "packet " + toSend.getClass().getSimpleName() + " sent and client disconnected.");
     }
 
     public void disconnect() {

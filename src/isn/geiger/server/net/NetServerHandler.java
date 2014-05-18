@@ -18,8 +18,9 @@ public class NetServerHandler extends IoHandlerAdapter {
     public void sessionOpened(IoSession session) throws Exception {
         NetClient client = new NetClient(session);
         session.setAttribute("client", client);
-        client.send(new AskAuthPacket(client.genAuthKey()));
         Main.println(client, "connected.");
+        
+        client.send(new AskAuthPacket(client.genAuthKey()));
     }
 
     @Override
@@ -28,7 +29,7 @@ public class NetServerHandler extends IoHandlerAdapter {
         if (objC != null && objC instanceof NetClient) {
             NetClient client = (NetClient) objC;
             if (message instanceof IoBuffer) {
-                PacketParser.Parse(client, (IoBuffer) message);
+                PacketParser.Parse(client, ((IoBuffer) message));
             }
         }
     }

@@ -21,6 +21,7 @@ public class App {
     public final ScheduledExecutorService Scheduler;
     public final Logger errorsLogger;
     public final Logger infosLogger;
+    public final ConsoleCommands ConsoleCommands;
     
     public Configuration getConfig(){
         return Configuration.getConfiguration();
@@ -32,6 +33,7 @@ public class App {
         this.Scheduler = Executors.newScheduledThreadPool(2);
         this.errorsLogger = new Logger("errors.log");
         this.infosLogger = new Logger("infos.log");
+        this.ConsoleCommands = new ConsoleCommands();
     }
 
     public void start(String[] args) {
@@ -41,6 +43,7 @@ public class App {
             this.errorsLogger.scheduleBy(Scheduler);
             this.infosLogger.scheduleBy(Scheduler);
             this.ServerSocket.start(this.Configuration.getConfiguration());
+            this.ConsoleCommands.start();
         } catch (Exception e) {
             propagate(e);
         }
@@ -51,5 +54,6 @@ public class App {
         this.Scheduler.shutdown();
         this.infosLogger.close();
         this.errorsLogger.close();
+        this.ConsoleCommands.stop();
     }
 }

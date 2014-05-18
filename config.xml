@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="ISO-8859-1"?>
 <config>
     <!-- Client auth user -->
-	<client-user>isn-geiger</client-user>
+	<client-user>toto</client-user>
 	
 	<!-- Client auth password -->
-	<client-pass>isn-geiger</client-pass>
+	<client-pass>tata</client-pass>
 	
 	<!-- Server host address to bind -->
 	<server-host>127.0.0.1</server-host>
 	
 	<!-- Server port to bind (integer)-->
-	<server-host>34887</server-host>
+	<server-port>34859</server-port>
 </config>

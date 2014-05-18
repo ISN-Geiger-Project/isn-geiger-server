@@ -17,6 +17,9 @@ public class ConsoleCommands implements Runnable {
     public ConsoleCommands() {
         this._t = new Thread(this);
         _t.setDaemon(true);
+    }
+    
+    public void start(){
         running = true;
         _t.start();
     }
@@ -67,6 +70,7 @@ public class ConsoleCommands implements Runnable {
                 PacketPrototype packet = new AskHitsListPacket(start, end);
                 App().ServerSocket.broadcast(packet);
                 Main.println("Synchronizing last hour hits with geiger-clients.");
+                break;
             }
             default:
                 System.out.println("Commande non reconnue ou incomplete.");

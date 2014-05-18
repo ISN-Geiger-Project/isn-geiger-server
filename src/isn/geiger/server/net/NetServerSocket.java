@@ -35,10 +35,10 @@ public class NetServerSocket {
         acceptor.setBacklog(10000);
 
         acceptor.getSessionConfig().setSendBufferSize(1024);
-        acceptor.getSessionConfig().setReadBufferSize(1024);
+        acceptor.getSessionConfig().setReadBufferSize(8192);
 
         IoBuffer.setAllocator(new CachedBufferAllocator());
-
+        
         acceptor.setHandler(new NetServerHandler());
     }
 
@@ -56,6 +56,8 @@ public class NetServerSocket {
     }
 
     public void start(Configuration config) throws Exception {
+        System.out.println("binding ..."+config.getString("server-host") + ": "+ config.getInt("server-port"));
+    
         this.bind(config.getString("server-host"), config.getInt("server-port"));
     }
 }

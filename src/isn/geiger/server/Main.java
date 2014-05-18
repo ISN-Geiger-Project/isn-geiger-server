@@ -1,6 +1,8 @@
 package isn.geiger.server;
 
+import isn.geiger.server.database.controllers.exceptions.PreexistingEntityException;
 import isn.geiger.server.net.NetClient;
+import java.io.IOException;
 
 /**
  *
@@ -32,15 +34,23 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("ISN Geiger Project Server");
         System.out.println("=========================");
-        
+
         App = new App();
         App.start(args);
-        
+
         println("Server started!");
     }
 
     public static void propagate(Throwable tr) {
-        App.errorsLogger.logErr(tr);
+        if (tr instanceof IOException) {
+            return;
+        } else if (tr instanceof PreexistingEntityException) {
+            App.errorsLogger.log("Error : "+tr.getMessage());
+            System.out.println("Error : "+tr.getMessage());
+        } else {
+            App.errorsLogger.logErr(tr);
+            tr.printStackTrace();
+        }
     }
 
     public static void println(String message) {
